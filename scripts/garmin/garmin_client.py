@@ -12,11 +12,12 @@ logger = logging.getLogger(__name__)
 
 
 class GarminClient:
-  def __init__(self, email, password, auth_domain):
+  def __init__(self, email, password, auth_domain, newest_num):
         self.auth_domain = auth_domain
         self.email = email
         self.password = password
         self.garthClient = garth
+        self.newestNum = int(newest_num)
         self.headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36",
             "origin": GARMIN_URL_DICT.get("SSO_URL_ORIGIN"),
@@ -55,6 +56,25 @@ class GarminClient:
      params = {"start": str(start), "limit": str(limit)}
      activities =  self.connectapi(path=GARMIN_URL_DICT["garmin_connect_activities"], params=params)
      return activities;
+
+  # ## 获取所有运动
+  # def getAllActivities(self): 
+  #   all_activities = []
+  #   start = 0
+  #   limit=100
+  #   if 0 < self.newestNum < 100:
+  #     limit = self.newestNum
+      
+  #   while(True):
+  #     activities = self.getActivities(start=start, limit=limit)
+  #     if len(activities) > 0:
+  #       all_activities.extend(activities)
+        
+  #       if 0 < self.newestNum < 100 or start > self.newestNum:
+  #          return all_activities
+  #     else:
+  #        return all_activities
+  #     start += limit
 
   ## 获取所有运动
   def getAllActivities(self): 
